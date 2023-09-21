@@ -57,7 +57,7 @@ class NoticiaController extends Controller
     {
         //echo "Metodo STORE";
 
-        $this->authorize('create', Noticia::class);
+        $this->authorize('createNoticia', Noticia::class);
         
         $novanoticia = new Noticia();
         $novanoticia->titulo = $request->titulo;
@@ -66,7 +66,7 @@ class NoticiaController extends Controller
 
         $novanoticia->save();
 
-        return redirect()->route('noticias.index');
+        return redirect()->route('viewsNoticias.index');
     }
 
     /**
@@ -79,7 +79,7 @@ class NoticiaController extends Controller
     {
         //echo "Metodo SHOW";
 
-        $this->authorize('view', Noticia::class);
+        $this->authorize('viewNoticia', Noticia::class);
 
         return view('viewsNoticias.show', compact(['noticia']));
     }
@@ -94,7 +94,7 @@ class NoticiaController extends Controller
     {
         //echo "Metodo EDIT";
 
-        $this->authorize('update', Noticia::class);
+        $this->authorize('updateNoticia', Noticia::class);
 
         return view('viewsNoticias.edit', compact(['noticia']));
     }
@@ -110,7 +110,7 @@ class NoticiaController extends Controller
     {
         //echo "Metodo UPDATE";
 
-        $this->authorize('update', Noticia::class);
+        $this->authorize('updateNoticia', Noticia::class);
 
         $noticia->titulo = $request->titulo;   
         $noticia->descricao = $request->descricao;
@@ -129,19 +129,19 @@ class NoticiaController extends Controller
     {
         //echo "Metodo DELETE (DESTROY)";
 
-        $this->authorize('delete', Noticia::class);
+        $this->authorize('deleteNoticia', Noticia::class);
         
         $noticia = Noticia::find($noticia->id);
         
         if(!isset($noticia)){
             $msg = "Não há [ Noticia ], com identificador [ $noticia->id ], registrada no sistema!";
-            $link = "noticias.index";
-            return view('noticias.erroid', compact(['msg', 'link']));
+            $link = "viewsNoticias.index";
+            return view('viewsNoticias.erroid', compact(['msg', 'link']));
         }
         
         Noticia::destroy($noticia->id);
         
-        return redirect()->route('noticias.index');
+        return redirect()->route('viewsNoticias.index');
         
     }
 }
